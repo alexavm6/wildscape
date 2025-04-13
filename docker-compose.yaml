@@ -1,0 +1,10 @@
+services:
+  db:
+    image: mongo:7
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_DATABASE: wildscape
+    volumes:
+      - ./mongo:/data/db
