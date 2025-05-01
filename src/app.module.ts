@@ -16,6 +16,10 @@ import { DepartmentModule } from './department/department.module';
 import { ProvinceModule } from './province/province.module';
 import { DistrictModule } from './district/district.module';
 import { CityModule } from './city/city.module';
+import { EventModule } from './event/event.module';
+import { CouponModule } from './coupon/coupon.module';
+import { PromotionModule } from './promotion/promotion.module';
+import { PromotionProductModule } from './promotion-product/promotion-product.module';
 
 @Module({
   imports: [
@@ -36,6 +40,10 @@ import { CityModule } from './city/city.module';
     ProvinceModule,
     DistrictModule,
     CityModule,
+    EventModule,
+    CouponModule,
+    PromotionModule,
+    PromotionProductModule,
   ],
   controllers: [],
   providers: [],

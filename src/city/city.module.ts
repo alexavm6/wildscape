@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { CityService } from './city.service';
 import { CityController } from './city.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CampusModule } from 'src/campus/campus.module';
+import { CampusModule } from '@campus/campus.module';
 import { City, CitySchema } from './schema/city.schema';
 
 @Module({

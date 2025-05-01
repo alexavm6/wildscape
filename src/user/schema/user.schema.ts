@@ -4,7 +4,16 @@ import { HydratedDocument } from 'mongoose';
 //for injecting
 export type UserDocument = HydratedDocument<User>;
 
-@Schema({ timestamps: true })
+@Schema({
+  toJSON: {
+    transform: (doc, ret) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+      return ret;
+    },
+  },
+})
 export class User {
   @Prop({ required: true })
   names: string;
@@ -28,7 +37,7 @@ export class User {
   address: string;
 
   @Prop({ default: true })
-  state: boolean;
+  delete_state: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

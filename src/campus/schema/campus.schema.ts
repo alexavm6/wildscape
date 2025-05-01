@@ -5,10 +5,19 @@ import * as mongoose from 'mongoose';
 //for injecting
 export type CampusDocument = HydratedDocument<Campus>;
 
-import { Company } from '../../company/schema/company.schema';
+import { Company } from '@company/schema/company.schema';
 
-// inside the class definition
-@Schema({ timestamps: true })
+@Schema({
+  toJSON: {
+    transform: (doc, ret) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+      delete ret.delete_state;
+      return ret;
+    },
+  },
+})
 export class Campus {
   @Prop({ required: true })
   name: string;
@@ -27,7 +36,7 @@ export class Campus {
   company_id: Company;
 
   @Prop({ default: true })
-  state: boolean;
+  delete_state: boolean;
 }
 
 export const CampusSchema = SchemaFactory.createForClass(Campus);

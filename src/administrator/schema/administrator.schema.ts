@@ -4,7 +4,7 @@ import { HydratedDocument } from 'mongoose';
 //for injecting
 export type AdministratorDocument = HydratedDocument<Administrator>;
 
-@Schema({ timestamps: true })
+@Schema()
 export class Administrator {
   @Prop({ required: true })
   names: string;
@@ -28,7 +28,7 @@ export class Administrator {
   address: string;
 
   @Prop({ default: true })
-  state: boolean;
+  delete_state: boolean;
 }
 
 export const AdministratorSchema = SchemaFactory.createForClass(Administrator);

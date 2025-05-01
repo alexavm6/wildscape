@@ -3,9 +3,11 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { envs } from './config/envs';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   //route /api
   app.setGlobalPrefix('api');
@@ -14,6 +16,7 @@ async function bootstrap() {
   //whitelist get rid of fields not defined in the DTO
   app.useGlobalPipes(
     new ValidationPipe({
+      transform: true,
       whitelist: true,
     }),
   );

@@ -1,20 +1,33 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { Campus } from '../../campus/schema/campus.schema';
-import { Department } from '../../department/schema/department.schema';
-import { Province } from '../../province/schema/province.schema';
-import { District } from '../../district/schema/district.schema';
-import { City } from '../../city/schema/city.schema';
-import { Activity } from '../../activity/schema/activity.schema';
-import { Category } from '../../category/schema/category.schema';
-import { Risk } from '../../risk/schema/risk.schema';
+import { Campus } from '@campus/schema/campus.schema';
+import { Department } from '@department/schema/department.schema';
+import { Province } from '@province/schema/province.schema';
+import { District } from '@district/schema/district.schema';
+import { City } from '@city/schema/city.schema';
+import { Activity } from '@activity/schema/activity.schema';
+import { Category } from '@category/schema/category.schema';
+import { Risk } from '@risk/schema/risk.schema';
 
 //for injecting
 export type ProductDocument = HydratedDocument<Product>;
 
-@Schema({ timestamps: true })
+@Schema({
+  toJSON: {
+    transform: (doc, ret) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+      delete ret.is_available;
+      return ret;
+    },
+  },
+})
 export class Product {
+  @Prop({ required: true })
+  name: string;
+
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Activity.name,
@@ -59,10 +72,10 @@ export class Product {
   image: string;
 
   @Prop({ required: true })
-  day: Date;
+  activity_day: Date;
 
   @Prop({ required: true })
-  duration: number;
+  activity_duration: number;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
@@ -103,34 +116,46 @@ export class Product {
     ref: Department.name,
     required: true,
   })
-  encounter_department_id: Department;
+  meeting_department_id: Department;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Province.name,
     required: true,
   })
-  encounter_province_id: Province;
+  meeting_province_id: Province;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: District.name,
     required: true,
   })
-  encounter_district_id: District;
+  meeting_district_id: District;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: City.name,
     required: true,
   })
-  encounter_city_id: City;
+  meeting_city_id: City;
 
   @Prop({ required: true })
-  encounter_address: string;
+  meeting_address: string;
 
   @Prop({ required: true })
-  encounter_time: Date;
+  meeting_time: Date;
+
+  @Prop({ required: true })
+  start_day: Date;
+
+  @Prop({ required: true })
+  start_time: Date;
+
+  @Prop({ required: true })
+  end_day: Date;
+
+  @Prop({ required: true })
+  end_time: Date;
 
   @Prop({ default: false })
   is_available: boolean;

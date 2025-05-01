@@ -23,13 +23,29 @@ npm i -g @nestjs/cli
 docker-compose up -d
 ```
 
-5.  Usar el string de conexion
+5.  Iniciar el servidor en modo de desarrollo
 
 ```
-mongodb://localhost:27017/wildscape
+npm run start:dev
+```
+
+6.  En otra consola cargar el seed (cmd)
+
+```
+npm run seed
 ```
 
 ## Stack
 
 - MongoDB
 - NestJS
+- TypeScript
+
+## Recomendaciones
+
+- TablePlus
+
+## Programas
+
+- Docker Desktop
+- Postman

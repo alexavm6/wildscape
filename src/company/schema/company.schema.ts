@@ -1,22 +1,24 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 
-//for injecting
 export type CompanyDocument = HydratedDocument<Company>;
 
-@Schema({ timestamps: true })
+@Schema({
+  toJSON: {
+    transform: (doc, ret) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+      return ret;
+    },
+  },
+})
 export class Company {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true, unique: true })
-  ruc: number;
-
   @Prop({ required: true })
-  address: string;
-
-  @Prop({ default: true })
-  state: boolean;
+  ruc: string;
 }
 
 export const CompanySchema = SchemaFactory.createForClass(Company);

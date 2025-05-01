@@ -1,18 +1,13 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import * as mongoose from 'mongoose';
-import { Campus } from '../../campus/schema/campus.schema';
-
-export enum EmployeeRole {
-  Manager = 'employee_manager_role',
-  Guide = 'employee_guide_role',
-  ProductManager = 'employee_product_manager_role',
-}
+import { Campus } from '@campus/schema/campus.schema';
+import { EmployeeRole } from '@enums/enums';
 
 //for injecting
 export type EmployeeDocument = HydratedDocument<Employee>;
 
-@Schema({ timestamps: true })
+@Schema()
 export class Employee {
   @Prop({ required: true })
   names: string;
@@ -46,7 +41,7 @@ export class Employee {
   role: string;
 
   @Prop({ default: true })
-  state: boolean;
+  delete_state: boolean;
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);

@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { DistrictService } from './district.service';
 import { DistrictController } from './district.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CampusModule } from 'src/campus/campus.module';
+import { CampusModule } from '@campus/campus.module';
 import { District, DistrictSchema } from './schema/district.schema';
 
 @Module({
