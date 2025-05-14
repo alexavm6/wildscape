@@ -14,10 +14,8 @@ export class UserService {
     return await newUser.save();
   }
 
-  async findByEmailOrDni(email: string, dni: string): Promise<User | null> {
-    return await this.userModel.findOne({
-      $or: [{ email }, { dni }],
-    });
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.userModel.findOne({ email });
   }
 
   async findById(id: string): Promise<User> {

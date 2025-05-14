@@ -2,7 +2,13 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
 import * as mongoose from 'mongoose';
 import { Campus } from '@campus/schema/campus.schema';
-import { EmployeeRole } from '@enums/enums';
+import { Role } from '@enums/enums';
+
+enum EmployeeRole {
+  EmployeeManager = Role.EmployeeManager,
+  EmployeeGuide = Role.EmployeeGuide,
+  EmployeeProductManager = Role.EmployeeProductManager,
+}
 
 //for injecting
 export type EmployeeDocument = HydratedDocument<Employee>;
@@ -18,6 +24,9 @@ export class Employee {
   @Prop({ required: true, unique: true })
   dni: string;
 
+  @Prop()
+  image?: string;
+
   @Prop({ required: true, unique: true })
   email: string;
 
@@ -26,9 +35,6 @@ export class Employee {
 
   @Prop({ required: true })
   telephone: string;
-
-  @Prop({ required: true })
-  address: string;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
@@ -41,7 +47,7 @@ export class Employee {
   role: string;
 
   @Prop({ default: true })
-  delete_state: boolean;
+  is_available: boolean;
 }
 
 export const EmployeeSchema = SchemaFactory.createForClass(Employee);

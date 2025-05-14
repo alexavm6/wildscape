@@ -6,7 +6,16 @@ import { Campus } from '@campus/schema/campus.schema';
 //for injecting
 export type PromotionDocument = HydratedDocument<Promotion>;
 
-@Schema()
+@Schema({
+  toJSON: {
+    transform: (doc, ret) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+      return ret;
+    },
+  },
+})
 export class Promotion {
   @Prop({ required: true })
   name: string;
@@ -14,24 +23,14 @@ export class Promotion {
   @Prop({ required: true })
   description: string;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Campus.name,
-    required: true,
-  })
-  campus_id: Campus;
+  @Prop()
+  image?: string;
 
   @Prop({ required: true })
   start_day: Date;
 
   @Prop({ required: true })
-  start_time: Date;
-
-  @Prop({ required: true })
   end_day: Date;
-
-  @Prop({ required: true })
-  end_time: Date;
 
   @Prop({ default: false })
   is_available: boolean;

@@ -12,7 +12,6 @@ export type DistrictDocument = HydratedDocument<District>;
       ret.id = ret._id;
       delete ret._id;
       delete ret.__v;
-      delete ret.delete_state;
       return ret;
     },
   },
@@ -22,7 +21,7 @@ export class District {
   name: string;
 
   @Prop({ default: true })
-  delete_state: boolean;
+  is_available: boolean;
 }
 
 export const DistrictSchema = SchemaFactory.createForClass(District);

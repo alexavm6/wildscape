@@ -7,7 +7,16 @@ import { Promotion } from '@promotion/schema/promotion.schema';
 //for injecting
 export type PromotionProductDocument = HydratedDocument<PromotionProduct>;
 
-@Schema()
+@Schema({
+  toJSON: {
+    transform: (doc, ret) => {
+      ret.id = ret._id;
+      delete ret._id;
+      delete ret.__v;
+      return ret;
+    },
+  },
+})
 export class PromotionProduct {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,

@@ -18,11 +18,14 @@ export class User {
   @Prop({ required: true })
   names: string;
 
-  @Prop({ required: true })
-  last_names: string;
+  @Prop()
+  last_names?: string;
 
-  @Prop({ required: true, unique: true })
-  dni: string;
+  @Prop()
+  dni?: string;
+
+  @Prop()
+  image?: string;
 
   @Prop({ required: true, unique: true })
   email: string;
@@ -30,14 +33,11 @@ export class User {
   @Prop({ required: true })
   password: string;
 
-  @Prop({ required: true })
-  telephone: string;
-
-  @Prop({ required: true })
-  address: string;
+  @Prop()
+  telephone?: string;
 
   @Prop({ default: true })
-  delete_state: boolean;
+  is_available?: boolean;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

@@ -11,12 +11,14 @@ import { City } from '@city/schema/city.schema';
 export type EventDocument = HydratedDocument<Event>;
 
 @Schema({
+  timestamps: true,
   toJSON: {
     transform: (doc, ret) => {
       ret.id = ret._id;
       delete ret._id;
       delete ret.__v;
-      delete ret.is_available;
+      delete ret.createdAt;
+      delete ret.updatedAt;
       return ret;
     },
   },
@@ -31,61 +33,59 @@ export class Event {
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Campus.name,
-    required: true,
   })
-  campus_id: Campus;
+  campus_id?: Campus;
 
-  @Prop({ required: true })
-  price: number;
+  @Prop()
+  price?: number;
 
-  @Prop({ required: true })
-  capacity: number;
+  @Prop()
+  image?: string;
+
+  @Prop()
+  event_day?: Date;
+
+  @Prop()
+  event_time?: Date;
+
+  @Prop()
+  capacity?: number;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Department.name,
-    required: true,
   })
-  department_id: Department;
+  department_id?: Department;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Province.name,
-    required: true,
   })
-  province_id: Province;
+  province_id?: Province;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: District.name,
-    required: true,
   })
-  district_id: District;
+  district_id?: District;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: City.name,
-    required: true,
   })
-  city_id: City;
+  city_id?: City;
 
-  @Prop({ required: true })
-  address: string;
+  @Prop()
+  address?: string;
 
-  @Prop({ required: true })
-  start_day: Date;
+  @Prop()
+  start_day?: Date;
 
-  @Prop({ required: true })
-  start_time: Date;
-
-  @Prop({ required: true })
-  end_day: Date;
-
-  @Prop({ required: true })
-  end_time: Date;
+  @Prop()
+  end_day?: Date;
 
   @Prop({ default: false })
-  is_available: boolean;
+  is_available?: boolean;
 }
 
 export const EventSchema = SchemaFactory.createForClass(Event);

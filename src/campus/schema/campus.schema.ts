@@ -13,7 +13,6 @@ import { Company } from '@company/schema/company.schema';
       ret.id = ret._id;
       delete ret._id;
       delete ret.__v;
-      delete ret.delete_state;
       return ret;
     },
   },
@@ -36,7 +35,7 @@ export class Campus {
   company_id: Company;
 
   @Prop({ default: true })
-  delete_state: boolean;
+  is_available: boolean;
 }
 
 export const CampusSchema = SchemaFactory.createForClass(Campus);

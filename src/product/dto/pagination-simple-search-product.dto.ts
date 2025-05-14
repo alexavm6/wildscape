@@ -1,26 +1,26 @@
 import {
+  IsOptional,
   IsString,
-  IsNotEmpty,
   IsNumber,
+  IsPositive,
   IsDateString,
-  IsBoolean,
   IsMongoId,
   Min,
-  IsOptional,
-  IsDate,
-  IsISO8601,
-  IsPositive,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { PaginationSimpleDto } from '@common/dto/pagination-simple.dto';
+import { PartialType } from '@nestjs/mapped-types';
 
-export class CreateProductDto {
+export class PaginationSimpleSearchProductDto extends PartialType(
+  PaginationSimpleDto,
+) {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  name: string;
+  name?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  description: string;
+  description?: string;
 
   @IsOptional()
   @IsMongoId()
@@ -40,8 +40,18 @@ export class CreateProductDto {
 
   @IsOptional()
   @IsNumber()
-  @Min(1)
+  @Min(0)
   capacity?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  min_capacity?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  max_capacity?: number;
 
   @IsOptional()
   @IsNumber()
@@ -51,21 +61,42 @@ export class CreateProductDto {
   @IsOptional()
   @IsNumber()
   @Min(0)
-  price?: number;
-
-  @IsOptional()
-  @IsString()
-  image?: string;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  activity_day?: Date;
+  min_displacement_duration?: number;
 
   @IsOptional()
   @IsNumber()
-  @IsPositive()
+  @Min(0)
+  max_displacement_duration?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  price?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  min_price?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  max_price?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
   activity_duration?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  min_activity_duration?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  max_activity_duration?: number;
 
   @IsOptional()
   @IsMongoId()
@@ -88,11 +119,6 @@ export class CreateProductDto {
   activity_address?: string;
 
   @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  activity_time?: Date;
-
-  @IsOptional()
   @IsMongoId()
   meeting_department_id?: string;
 
@@ -111,23 +137,4 @@ export class CreateProductDto {
   @IsOptional()
   @IsString()
   meeting_address?: string;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  meeting_time?: Date;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  start_day?: Date;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  end_day?: Date;
-
-  @IsOptional()
-  @IsBoolean()
-  is_available?: boolean;
 }

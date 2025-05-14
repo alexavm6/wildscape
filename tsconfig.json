@@ -32,7 +32,8 @@
       "@sale-detail/*": ["src/sale-detail/*"],
       "@user/*": ["src/user/*"],
       "@enums/*": ["src/enums/*"],
-      "@filters/*": ["src/filters/*"]
+      "@filters/*": ["src/filters/*"],
+      "@common/*": ["src/common/*"]
     },
     "incremental": true,
     "skipLibCheck": true,

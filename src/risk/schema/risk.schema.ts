@@ -12,7 +12,6 @@ export type RiskDocument = HydratedDocument<Risk>;
       ret.id = ret._id;
       delete ret._id;
       delete ret.__v;
-      delete ret.delete_state;
       return ret;
     },
   },
@@ -22,7 +21,7 @@ export class Risk {
   name: string;
 
   @Prop({ default: true })
-  delete_state: boolean;
+  is_available?: boolean;
 }
 
 export const RiskSchema = SchemaFactory.createForClass(Risk);

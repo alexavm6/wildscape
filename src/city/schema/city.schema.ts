@@ -12,7 +12,6 @@ export type CityDocument = HydratedDocument<City>;
       ret.id = ret._id;
       delete ret._id;
       delete ret.__v;
-      delete ret.delete_state;
       return ret;
     },
   },
@@ -22,7 +21,7 @@ export class City {
   name: string;
 
   @Prop({ default: true })
-  delete_state: boolean;
+  is_available?: boolean;
 }
 
 export const CitySchema = SchemaFactory.createForClass(City);

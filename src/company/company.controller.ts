@@ -12,29 +12,34 @@ import {
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { UserTypesGuard } from '@auth/guards/user-type.guard';
 import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
-import { UserTypes } from '@auth/decorators/user-type.decorator';
 import { HttpExceptionFilter } from '@filters/http-exception.filter';
-import { UserType } from '@enums/enums';
-import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
+import { ParseMongoIdPipe } from '@common/pipes/parse-mongo-id.pipe';
+import { Roles } from '@auth/decorators/roles.decorator';
+import { RolesGuard } from '@auth/guards/roles.guard';
+import { Role } from '@enums/enums';
 
 @Controller('company')
 export class CompanyController {
   constructor(private readonly companyService: CompanyService) {}
 
-  //only administrator can edit the company
-  @UserTypes(UserType.Administrator)
-  @UseGuards(JwtAuthGuard, UserTypesGuard)
+  /*
+    para: administrador
+    param: id
+  */
+  @Roles(Role.Administrator)
+  @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
-  async update(
+  async updateById(
     @Param('id', ParseMongoIdPipe) id: string,
     @Body() updateCompanyDto: UpdateCompanyDto,
   ) {
-    return this.companyService.update(id, updateCompanyDto);
+    return this.companyService.updateById(id, updateCompanyDto);
   }
 
-  //for when you need the data of the company for pdf of sale data
+  /*
+    para: usuarios
+  */
   @Get()
   async findAll() {
     return this.companyService.findAll();

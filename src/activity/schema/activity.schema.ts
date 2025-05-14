@@ -12,7 +12,6 @@ export type ActivityDocument = HydratedDocument<Activity>;
       ret.id = ret._id;
       delete ret._id;
       delete ret.__v;
-      delete ret.delete_state;
       return ret;
     },
   },
@@ -21,8 +20,11 @@ export class Activity {
   @Prop({ required: true })
   name: string;
 
+  @Prop()
+  image?: string;
+
   @Prop({ default: true })
-  delete_state: boolean;
+  is_available?: boolean;
 }
 
 export const ActivitySchema = SchemaFactory.createForClass(Activity);

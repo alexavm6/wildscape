@@ -1,25 +1,26 @@
 import {
+  IsOptional,
   IsString,
-  IsNotEmpty,
   IsNumber,
+  IsPositive,
   IsDateString,
-  IsBoolean,
   IsMongoId,
   Min,
-  IsOptional,
-  IsDate,
-  IsISO8601,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+import { PaginationSimpleDto } from '@common/dto/pagination-simple.dto';
+import { PartialType } from '@nestjs/mapped-types';
 
-export class CreateEventDto {
+export class PaginationSimpleSearchEventDto extends PartialType(
+  PaginationSimpleDto,
+) {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  name: string;
+  name?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  description: string;
+  description?: string;
 
   @IsOptional()
   @IsMongoId()
@@ -31,23 +32,29 @@ export class CreateEventDto {
   price?: number;
 
   @IsOptional()
-  @IsString()
-  image?: string;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  event_day?: Date;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  event_time?: Date;
+  @IsNumber()
+  @Min(0)
+  min_price?: number;
 
   @IsOptional()
   @IsNumber()
-  @Min(1)
+  @Min(0)
+  max_price?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
   capacity?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  min_capacity?: number;
+
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  max_capacity?: number;
 
   @IsOptional()
   @IsMongoId()
@@ -68,18 +75,4 @@ export class CreateEventDto {
   @IsOptional()
   @IsString()
   address?: string;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  start_day?: Date;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  end_day?: Date;
-
-  @IsOptional()
-  @IsBoolean()
-  is_available?: boolean;
 }

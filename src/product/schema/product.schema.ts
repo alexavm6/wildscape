@@ -14,12 +14,14 @@ import { Risk } from '@risk/schema/risk.schema';
 export type ProductDocument = HydratedDocument<Product>;
 
 @Schema({
+  timestamps: true,
   toJSON: {
     transform: (doc, ret) => {
       ret.id = ret._id;
       delete ret._id;
       delete ret.__v;
-      delete ret.is_available;
+      delete ret.createdAt;
+      delete ret.updatedAt;
       return ret;
     },
   },
@@ -28,137 +30,119 @@ export class Product {
   @Prop({ required: true })
   name: string;
 
+  @Prop({ required: true })
+  description: string;
+
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Activity.name,
-    required: true,
   })
-  activity_id: Activity;
+  activity_id?: Activity;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Category.name,
-    required: true,
   })
-  category_id: Category;
+  category_id?: Category;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Risk.name,
-    required: true,
   })
-  risk_id: Risk;
+  risk_id?: Risk;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Campus.name,
-    required: true,
   })
-  campus_id: Campus;
+  campus_id?: Campus;
 
-  @Prop({ required: true })
-  description: string;
+  @Prop()
+  capacity?: number;
 
-  @Prop({ required: true })
-  capacity: number;
+  @Prop()
+  displacement_duration?: number;
 
-  @Prop({ required: true })
-  displacement_duration: number;
+  @Prop()
+  price?: number;
 
-  @Prop({ required: true })
-  price: number;
+  @Prop()
+  image?: string;
 
-  @Prop({ required: true })
-  image: string;
+  @Prop()
+  activity_day?: Date;
 
-  @Prop({ required: true })
-  activity_day: Date;
-
-  @Prop({ required: true })
-  activity_duration: number;
+  @Prop()
+  activity_duration?: number;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Department.name,
-    required: true,
   })
-  activity_department_id: Department;
+  activity_department_id?: Department;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Province.name,
-    required: true,
   })
-  activity_province_id: Province;
+  activity_province_id?: Province;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: District.name,
-    required: true,
   })
-  activity_district_id: District;
+  activity_district_id?: District;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: City.name,
-    required: true,
   })
-  activity_city_id: City;
+  activity_city_id?: City;
 
-  @Prop({ required: true })
-  activity_address: string;
+  @Prop()
+  activity_address?: string;
 
-  @Prop({ required: true })
-  activity_time: Date;
+  @Prop()
+  activity_time?: Date;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Department.name,
-    required: true,
   })
-  meeting_department_id: Department;
+  meeting_department_id?: Department;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Province.name,
-    required: true,
   })
-  meeting_province_id: Province;
+  meeting_province_id?: Province;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: District.name,
-    required: true,
   })
-  meeting_district_id: District;
+  meeting_district_id?: District;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: City.name,
-    required: true,
   })
-  meeting_city_id: City;
+  meeting_city_id?: City;
 
-  @Prop({ required: true })
-  meeting_address: string;
+  @Prop()
+  meeting_address?: string;
 
-  @Prop({ required: true })
-  meeting_time: Date;
+  @Prop()
+  meeting_time?: Date;
 
-  @Prop({ required: true })
-  start_day: Date;
+  @Prop()
+  start_day?: Date;
 
-  @Prop({ required: true })
-  start_time: Date;
-
-  @Prop({ required: true })
-  end_day: Date;
-
-  @Prop({ required: true })
-  end_time: Date;
+  @Prop()
+  end_day?: Date;
 
   @Prop({ default: false })
-  is_available: boolean;
+  is_available?: boolean;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

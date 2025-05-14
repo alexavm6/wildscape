@@ -4,6 +4,8 @@ import {
   IsNotEmpty,
   Length,
   Matches,
+  IsOptional,
+  IsBoolean,
 } from 'class-validator';
 
 export class CreateUserDto {
@@ -11,16 +13,21 @@ export class CreateUserDto {
   @IsNotEmpty()
   names: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  last_names: string;
+  last_names?: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @Length(8, 8)
-  dni: string;
+  dni?: string;
+
+  @IsOptional()
+  @IsString()
+  image?: string;
 
   @IsEmail()
+  @IsString()
   @IsNotEmpty()
   email: string;
 
@@ -28,12 +35,12 @@ export class CreateUserDto {
   @IsNotEmpty()
   password: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
   @Matches(/^\d{9}$/)
-  telephone: string;
+  telephone?: string;
 
-  @IsString()
-  @IsNotEmpty()
-  address: string;
+  @IsOptional()
+  @IsBoolean()
+  is_available?: boolean;
 }

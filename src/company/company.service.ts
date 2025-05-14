@@ -10,7 +10,7 @@ export class CompanyService {
     @InjectModel(Company.name) private companyModel: Model<CompanyDocument>,
   ) {}
 
-  async update(
+  async updateById(
     id: string,
     updateCompanyDto: UpdateCompanyDto,
   ): Promise<Company> {

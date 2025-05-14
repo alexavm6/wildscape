@@ -33,7 +33,6 @@ export class AuthService {
     const { email, password } = loginDto;
 
     let user: any;
-    let type: string = '';
     let role: string = '';
     let campus: any;
 
@@ -43,8 +42,7 @@ export class AuthService {
       // Si encuentra el admin, verifica la contraseña
       if (await bcrypt.compare(password, admin.password)) {
         user = admin;
-        role = 'administrator_role';
-        type = 'administrator';
+        role = 'administrator';
       } else {
         // Si la contraseña es incorrecta, devuelve error inmediatamente
         throw new UnauthorizedException('Credenciales inválidas');
@@ -59,7 +57,6 @@ export class AuthService {
         if (await bcrypt.compare(password, employee.password)) {
           user = employee;
           role = employee.role;
-          type = 'employee';
           campus = employee.campus_id;
         } else {
           // Si la contraseña es incorrecta, devuelve error inmediatamente
@@ -75,8 +72,7 @@ export class AuthService {
         // Si encuentra usuario regular, verifica contraseña
         if (await bcrypt.compare(password, regularUser.password)) {
           user = regularUser;
-          role = 'user_role';
-          type = 'user';
+          role = 'user';
         } else {
           // Si la contraseña es incorrecta, devuelve error inmediatamente
           throw new UnauthorizedException('Credenciales inválidas');
@@ -93,7 +89,6 @@ export class AuthService {
     const payload = {
       uid: user._id,
       role: role,
-      type: type,
     };
 
     // Generar token
@@ -103,23 +98,21 @@ export class AuthService {
         names: user.names,
         last_names: user.last_names,
         dni: user.dni,
+        image: user.image,
         email: user.email,
         telephone: user.telephone,
-        address: user.address,
         campus: campus,
         role: role,
-        type: type,
       },
       access_token: this.jwtService.sign(payload),
     };
   }
 
   async signup(createUserDto: CreateUserDto): Promise<any> {
-    const { email, dni, password } = createUserDto;
+    const { names, email, password } = createUserDto;
 
-    const userExists = await this.userService.findByEmailOrDni(email, dni);
-    if (userExists)
-      throw new ConflictException('El email o DNI ya están registrados');
+    const userExists = await this.userService.findByEmail(email);
+    if (userExists) throw new ConflictException('El email ya está registrado');
 
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
@@ -134,11 +127,10 @@ export class AuthService {
       names: user.names,
       last_names: user.last_names,
       dni: user.dni,
+      image: user.image,
       email: user.email,
       telephone: user.telephone,
-      address: user.address,
-      role: 'user_role',
-      type: 'user',
+      role: 'user',
     };
   }
 }
