@@ -11,17 +11,13 @@ import { ActivityModule } from '@activity/activity.module';
 import { CategoryModule } from '@category/category.module';
 import { RiskModule } from '@risk/risk.module';
 import { Product, ProductSchema } from './schema/product.schema';
+import { SaleDetailModule } from '@sale-detail/sale-detail.module';
+import { SaleModule } from '@sale/sale.module';
 
 @Module({
   imports: [
-    ActivityModule,
-    CategoryModule,
-    RiskModule,
-    CampusModule,
-    DepartmentModule,
-    ProvinceModule,
-    DistrictModule,
-    CityModule,
+    SaleModule,
+    SaleDetailModule,
     MongooseModule.forFeature([{ name: Product.name, schema: ProductSchema }]),
   ],
   controllers: [ProductController],

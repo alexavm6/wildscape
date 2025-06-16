@@ -35,12 +35,6 @@ export class SaleDetail {
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
-    ref: PromotionProduct.name,
-  })
-  promotion_product_id?: PromotionProduct;
-
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
     ref: Coupon.name,
   })
   coupon_id?: Coupon;

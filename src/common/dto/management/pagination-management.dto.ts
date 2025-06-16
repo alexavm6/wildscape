@@ -9,12 +9,14 @@ import {
   IsIn,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { PaginationSearchCategoryDto } from './pagination-search-category.dto';
+import { PaginationDto } from '@common/dto/pagination.dto';
 import { PartialType } from '@nestjs/mapped-types';
 
-export class PaginationManagementSearchCategoryDto extends PartialType(
-  PaginationSearchCategoryDto,
-) {
+export class PaginationManagementDto extends PartialType(PaginationDto) {
+  @IsOptional()
+  @IsString()
+  name?: string;
+
   @IsOptional()
   @IsIn(['true', 'false', 'all'])
   @IsString()

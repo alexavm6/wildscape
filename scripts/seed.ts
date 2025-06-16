@@ -115,9 +115,49 @@ async function seed() {
 
     //campus
     const campus1 = await campusModel.create({
-      name: 'Campus 1',
+      name: 'Campus Lima Norte',
       address: 'Address 1',
       annex: 1,
+      company_id: company1._id,
+      is_available: true,
+    });
+
+    const campus2 = await campusModel.create({
+      name: 'Campus Lima Sur',
+      address: 'Address 2',
+      annex: 2,
+      company_id: company1._id,
+      is_available: true,
+    });
+
+    const campus3 = await campusModel.create({
+      name: 'Campus Lima Central',
+      address: 'Address 3',
+      annex: 3,
+      company_id: company1._id,
+      is_available: true,
+    });
+
+    const campus4 = await campusModel.create({
+      name: 'Campus Lima Norte',
+      address: 'Address 4',
+      annex: 4,
+      company_id: company1._id,
+      is_available: true,
+    });
+
+    const campus5 = await campusModel.create({
+      name: 'Campus Lima Sur',
+      address: 'Address 5',
+      annex: 5,
+      company_id: company1._id,
+      is_available: true,
+    });
+
+    const campus6 = await campusModel.create({
+      name: 'Campus Lima Central',
+      address: 'Address 6',
+      annex: 6,
       company_id: company1._id,
       is_available: true,
     });
@@ -159,9 +199,54 @@ async function seed() {
       is_available: true,
     });
 
-    //event
+    //department
     const department1 = await departmentModel.create({
-      name: 'Lima',
+      name: 'Amazonas',
+      is_available: true,
+    });
+
+    const department2 = await departmentModel.create({
+      name: 'Ancash',
+      is_available: true,
+    });
+
+    const department3 = await departmentModel.create({
+      name: 'Apurimac',
+      is_available: true,
+    });
+
+    const department4 = await departmentModel.create({
+      name: 'Arequipa',
+      is_available: true,
+    });
+
+    const department5 = await departmentModel.create({
+      name: 'Ayacucho',
+      is_available: true,
+    });
+
+    const department6 = await departmentModel.create({
+      name: 'Cajamarca',
+      is_available: true,
+    });
+
+    const department7 = await departmentModel.create({
+      name: 'Callao',
+      is_available: true,
+    });
+
+    const department8 = await departmentModel.create({
+      name: 'Cusco',
+      is_available: true,
+    });
+
+    const department9 = await departmentModel.create({
+      name: 'Huancavelica',
+      is_available: true,
+    });
+
+    const department10 = await departmentModel.create({
+      name: 'Huanuco',
       is_available: true,
     });
 
@@ -170,13 +255,139 @@ async function seed() {
       is_available: true,
     });
 
+    const province2 = await provinceModel.create({
+      name: 'Cajatambo',
+      is_available: true,
+    });
+
+    const province3 = await provinceModel.create({
+      name: 'Canta',
+      is_available: true,
+    });
+
+    const province4 = await provinceModel.create({
+      name: 'Cañete',
+      is_available: true,
+    });
+
+    const province5 = await provinceModel.create({
+      name: 'Huaral',
+      is_available: true,
+    });
+
+    const province6 = await provinceModel.create({
+      name: 'Huaura',
+      is_available: true,
+    });
+
+    const province7 = await provinceModel.create({
+      name: 'Oyon',
+      is_available: true,
+    });
+
+    const province8 = await provinceModel.create({
+      name: 'Yauyos',
+      is_available: true,
+    });
+
+    //Distrito
     const district1 = await districtModel.create({
-      name: 'San Martin de Porres',
+      name: 'Miraflores',
+      is_available: true,
+    });
+
+    const district2 = await districtModel.create({
+      name: 'San Isidro',
+      is_available: true,
+    });
+
+    const district3 = await districtModel.create({
+      name: 'Barranco',
+      is_available: true,
+    });
+
+    const district4 = await districtModel.create({
+      name: 'Surco',
+      is_available: true,
+    });
+
+    const district5 = await districtModel.create({
+      name: 'La Molina',
+      is_available: true,
+    });
+
+    const district6 = await districtModel.create({
+      name: 'San Borja',
+      is_available: true,
+    });
+
+    const district7 = await districtModel.create({
+      name: 'Chorrillos',
+      is_available: true,
+    });
+
+    const district8 = await districtModel.create({
+      name: 'Pueblo Libre',
+      is_available: true,
+    });
+
+    const district9 = await districtModel.create({
+      name: 'Cercado de Lima',
+      is_available: true,
+    });
+
+    const district10 = await districtModel.create({
+      name: 'Magdalena del Mar',
       is_available: true,
     });
 
     const city1 = await cityModel.create({
       name: 'Lima',
+      is_available: true,
+    });
+
+    const city2 = await cityModel.create({
+      name: 'Arequipa',
+      is_available: true,
+    });
+
+    const city3 = await cityModel.create({
+      name: 'Chiclayo',
+      is_available: true,
+    });
+
+    const city4 = await cityModel.create({
+      name: 'Iquitos',
+      is_available: true,
+    });
+
+    const city5 = await cityModel.create({
+      name: 'Cusco',
+      is_available: true,
+    });
+
+    const city6 = await cityModel.create({
+      name: 'Callao',
+      is_available: true,
+    });
+
+    const city7 = await cityModel.create({
+      name: 'Trujillo',
+      is_available: true,
+    });
+
+    const city8 = await cityModel.create({
+      name: 'Tacna',
+      is_available: true,
+    });
+
+    const city9 = await cityModel.create({
+      name: 'Pucallpa',
+      is_available: true,
+    });
+
+    const city10 = await cityModel.create({
+      name: 'Huancayo',
       is_available: true,
     });
 
@@ -983,21 +1194,21 @@ async function seed() {
       name: 'Cabalgata',
       image:
         'https://cloudfront-us-east-1.images.arcpublishing.com/infobae/DKFWJNPYQZGU7DEG7LE3A6XS2Y.jpg',
-      is_available: true,
+      is_available: false,
     });
 
     const activity19 = await activityModel.create({
       name: 'Camping',
       image:
         'https://cloudfront-us-east-1.images.arcpublishing.com/infobae/DKFWJNPYQZGU7DEG7LE3A6XS2Y.jpg',
-      is_available: true,
+      is_available: false,
     });
 
     const activity20 = await activityModel.create({
       name: 'Caminatas urbanas',
       image:
         'https://cloudfront-us-east-1.images.arcpublishing.com/infobae/DKFWJNPYQZGU7DEG7LE3A6XS2Y.jpg',
-      is_available: true,
+      is_available: false,
     });
 
     const category1 = await categoryModel.create({
@@ -1679,13 +1890,13 @@ async function seed() {
     });
 
     const saleDetail3 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale2._id,
       product_id: product3._id,
       price: 200,
     });
 
     const saleDetail4 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale2._id,
       product_id: product4._id,
       price: 200,
     });
@@ -1698,13 +1909,13 @@ async function seed() {
     });
 
     const saleDetail5 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale3._id,
       product_id: product5._id,
       price: 200,
     });
 
     const saleDetail6 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale3._id,
       product_id: product6._id,
       price: 200,
     });
@@ -1717,13 +1928,13 @@ async function seed() {
     });
 
     const saleDetail7 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale4._id,
       product_id: product7._id,
       price: 200,
     });
 
     const saleDetail8 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale4._id,
       product_id: product8._id,
       price: 200,
     });
@@ -1736,13 +1947,13 @@ async function seed() {
     });
 
     const saleDetail9 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale5._id,
       product_id: product9._id,
       price: 200,
     });
 
     const saleDetail10 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale5._id,
       product_id: product10._id,
       price: 200,
     });
@@ -1755,13 +1966,13 @@ async function seed() {
     });
 
     const saleDetail11 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale6._id,
       product_id: product11._id,
       price: 200,
     });
 
     const saleDetail12 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale6._id,
       product_id: product12._id,
       price: 200,
     });
@@ -1774,13 +1985,13 @@ async function seed() {
     });
 
     const saleDetail13 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale7._id,
       product_id: product13._id,
       price: 200,
     });
 
     const saleDetail14 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale7._id,
       product_id: product14._id,
       price: 200,
     });
@@ -1793,13 +2004,13 @@ async function seed() {
     });
 
     const saleDetail15 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale8._id,
       product_id: product15._id,
       price: 200,
     });
 
     const saleDetail16 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale8._id,
       product_id: product16._id,
       price: 200,
     });
@@ -1812,13 +2023,13 @@ async function seed() {
     });
 
     const saleDetail17 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale9._id,
       product_id: product17._id,
       price: 200,
     });
 
     const saleDetail18 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale9._id,
       product_id: product18._id,
       price: 200,
     });
@@ -1831,13 +2042,13 @@ async function seed() {
     });
 
     const saleDetail19 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale10._id,
       product_id: product19._id,
       price: 200,
     });
 
     const saleDetail20 = await saleDetailModel.create({
-      sale_id: sale1._id,
+      sale_id: sale10._id,
       product_id: product20._id,
       price: 200,
     });

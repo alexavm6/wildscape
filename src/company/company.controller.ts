@@ -25,8 +25,21 @@ export class CompanyController {
 
   /*
     para: administrador
-    param: id
   */
+  @Roles(Role.Administrator)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('management')
+  async findAllManagement() {
+    return this.companyService.findAllManagement();
+  }
+
+  @Roles(Role.Administrator)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('management/:id')
+  async findByIdManagement(@Param('id', ParseMongoIdPipe) id: string) {
+    return this.companyService.findByIdManagement(id);
+  }
+
   @Roles(Role.Administrator)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
@@ -35,13 +48,5 @@ export class CompanyController {
     @Body() updateCompanyDto: UpdateCompanyDto,
   ) {
     return this.companyService.updateById(id, updateCompanyDto);
-  }
-
-  /*
-    para: usuarios
-  */
-  @Get()
-  async findAll() {
-    return this.companyService.findAll();
   }
 }

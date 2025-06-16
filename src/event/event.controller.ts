@@ -14,7 +14,6 @@ import { CreateEventDto } from './dto/create-event.dto';
 import { UpdateEventDto } from './dto/update-event.dto';
 import { ParseMongoIdPipe } from '@common/pipes/parse-mongo-id.pipe';
 import { PaginationDto } from '@common/dto/pagination.dto';
-import { PaginationSimpleDto } from '@common/dto/pagination-simple.dto';
 import { Roles } from '@auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 import { RolesGuard } from '@auth/guards/roles.guard';
@@ -30,6 +29,7 @@ export class EventController {
     para: usuarios
     is_available: true
     query: limit(5), offset(0)
+    return: name, description, price, id
   */
   @Get()
   async findAll(@Query() paginationDto: PaginationDto) {

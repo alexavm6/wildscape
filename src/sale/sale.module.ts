@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
 import { SaleService } from './sale.service';
 import { SaleController } from './sale.controller';
-import { UserModule } from 'src/user/user.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Sale, SaleSchema } from './schema/sale.schema';
+import { SaleDetailModule } from '@sale-detail/sale-detail.module';
 
 @Module({
   imports: [
-    UserModule,
+    SaleDetailModule,
     MongooseModule.forFeature([{ name: Sale.name, schema: SaleSchema }]),
   ],
   controllers: [SaleController],

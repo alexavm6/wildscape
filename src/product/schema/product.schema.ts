@@ -30,8 +30,8 @@ export class Product {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  description: string;
+  @Prop()
+  description?: string;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
@@ -61,7 +61,7 @@ export class Product {
   capacity?: number;
 
   @Prop()
-  displacement_duration?: number;
+  registered?: number;
 
   @Prop()
   price?: number;
@@ -105,44 +105,11 @@ export class Product {
   @Prop()
   activity_time?: Date;
 
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Department.name,
-  })
-  meeting_department_id?: Department;
-
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: Province.name,
-  })
-  meeting_province_id?: Province;
-
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: District.name,
-  })
-  meeting_district_id?: District;
-
-  @Prop({
-    type: mongoose.Schema.Types.ObjectId,
-    ref: City.name,
-  })
-  meeting_city_id?: City;
-
-  @Prop()
-  meeting_address?: string;
-
-  @Prop()
-  meeting_time?: Date;
-
-  @Prop()
-  start_day?: Date;
-
-  @Prop()
-  end_day?: Date;
-
   @Prop({ default: false })
   is_available?: boolean;
+
+  @Prop({ default: true })
+  registration_availability?: boolean;
 }
 
 export const ProductSchema = SchemaFactory.createForClass(Product);

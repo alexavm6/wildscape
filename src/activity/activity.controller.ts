@@ -12,13 +12,12 @@ import {
 import { ActivityService } from './activity.service';
 import { CreateActivityDto } from './dto/create-activity.dto';
 import { UpdateActivityDto } from './dto/update-activity.dto';
-import { PaginationSearchActivityDto } from './dto/pagination-search-activity.dto';
 import { PaginationDto } from '@common/dto/pagination.dto';
 import { Roles } from '@auth/decorators/roles.decorator';
 import { JwtAuthGuard } from '@auth/guards/jwt-auth.guard';
 import { RolesGuard } from '@auth/guards/roles.guard';
 import { Role } from '@enums/enums';
-import { PaginationManagementSearchActivityDto } from './dto/pagination-management-search-activity.dto';
+import { PaginationManagementDto } from '@common/dto/management/pagination-management.dto';
 import { ParseMongoIdPipe } from '@common/pipes/parse-mongo-id.pipe';
 
 @Controller('activity')
@@ -27,71 +26,44 @@ export class ActivityController {
 
   /*
     para: usuarios
-    is_available: true
-    query: limit(5), offset(0)
   */
   @Get()
   async findAll(@Query() paginationDto: PaginationDto) {
     return this.activityService.findAll(paginationDto);
   }
 
-  /*
-    para: usuarios
-    is_available: true
-    query: limit(5), offset(0), name
-  */
-  @Get('search')
-  async findAllSearch(
-    @Query() paginationSearchActivityDto: PaginationSearchActivityDto,
-  ) {
-    return this.activityService.findAllSearch(paginationSearchActivityDto);
+  @Get('filter')
+  async findAllProductFilter() {
+    return this.activityService.findAllProductFilter();
   }
 
   /*
-    para: administrador, employee(manager, product_manager)
-    is_available: true y false
-    query: limit(5), offset(0), name
+    para: administrador
   */
-  @Roles(Role.Administrator, Role.EmployeeManager, Role.EmployeeProductManager)
+  @Roles(Role.Administrator)
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Get('management-filter')
+  async findAllManagementFilter(@Query('name') name?: string) {
+    return this.activityService.findAllManagementFilter(name);
+  }
+
+  @Roles(Role.Administrator)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('management')
-  async findAllManagementSearch(
-    @Query()
-    paginationManagementSearchActivityDto: PaginationManagementSearchActivityDto,
+  async findAllManagement(
+    @Query() paginationManagementDto: PaginationManagementDto,
   ) {
-    return this.activityService.findAllManagementSearch(
-      paginationManagementSearchActivityDto,
-    );
+    return this.activityService.findAllManagement(paginationManagementDto);
   }
 
-  /*
-    para: usuarios
-    is_available: true
-    param: id
-  */
-  @Get(':id')
-  async findById(@Param('id', ParseMongoIdPipe) id: string) {
-    return this.activityService.findById(id);
-  }
-
-  /*
-  para: administrador, employee(manager, product_manager)
-  is_available: true y false
-  param: id
-  */
-  @Roles(Role.Administrator, Role.EmployeeManager, Role.EmployeeProductManager)
+  @Roles(Role.Administrator)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Get('management/:id')
   async findByIdManagement(@Param('id', ParseMongoIdPipe) id: string) {
     return this.activityService.findByIdManagement(id);
   }
 
-  /*
-    para: administrador, employee(manager, product_manager)
-    is_available: true y false
-    param: id
-  */
-  @Roles(Role.Administrator, Role.EmployeeManager, Role.EmployeeProductManager)
+  @Roles(Role.Administrator)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Patch(':id')
   async updateById(
@@ -101,27 +73,25 @@ export class ActivityController {
     return this.activityService.updateById(id, updateActivityDto);
   }
 
-  /*
-    para: administrador, employee(manager, product_manager)
-    is_available: true y false
-    param: id
-  */
-  @Roles(Role.Administrator, Role.EmployeeManager, Role.EmployeeProductManager)
+  @Roles(Role.Administrator)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Post()
   async create(@Body() createActivityDto: CreateActivityDto) {
     return this.activityService.create(createActivityDto);
   }
 
-  /*
-  para: administrador, employee(manager, product_manager)
-  is_available: true y false
-  param: id
-  */
-  @Roles(Role.Administrator, Role.EmployeeManager, Role.EmployeeProductManager)
+  @Roles(Role.Administrator)
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Delete(':id')
   async delete(@Param('id', ParseMongoIdPipe) id: string) {
     return this.activityService.delete(id);
+  }
+
+  /*
+    para: usuarios
+  */
+  @Get(':id')
+  async findById(@Param('id', ParseMongoIdPipe) id: string) {
+    return this.activityService.findById(id);
   }
 }

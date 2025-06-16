@@ -18,9 +18,9 @@ export class CreateProductDto {
   @IsNotEmpty()
   name: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  description: string;
+  description?: string;
 
   @IsOptional()
   @IsMongoId()
@@ -46,7 +46,7 @@ export class CreateProductDto {
   @IsOptional()
   @IsNumber()
   @Min(0)
-  displacement_duration?: number;
+  registered?: number;
 
   @IsOptional()
   @IsNumber()
@@ -64,7 +64,7 @@ export class CreateProductDto {
 
   @IsOptional()
   @IsNumber()
-  @IsPositive()
+  @Min(0)
   activity_duration?: number;
 
   @IsOptional()
@@ -93,41 +93,10 @@ export class CreateProductDto {
   activity_time?: Date;
 
   @IsOptional()
-  @IsMongoId()
-  meeting_department_id?: string;
-
-  @IsOptional()
-  @IsMongoId()
-  meeting_province_id?: string;
-
-  @IsOptional()
-  @IsMongoId()
-  meeting_district_id?: string;
-
-  @IsOptional()
-  @IsMongoId()
-  meeting_city_id?: string;
-
-  @IsOptional()
-  @IsString()
-  meeting_address?: string;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  meeting_time?: Date;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  start_day?: Date;
-
-  @IsOptional()
-  @IsDate()
-  @Type(() => Date)
-  end_day?: Date;
+  @IsBoolean()
+  is_available?: boolean;
 
   @IsOptional()
   @IsBoolean()
-  is_available?: boolean;
+  registration_availability?: boolean;
 }

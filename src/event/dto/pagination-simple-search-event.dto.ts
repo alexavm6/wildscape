@@ -8,12 +8,10 @@ import {
   Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { PaginationSimpleDto } from '@common/dto/pagination-simple.dto';
+import { PaginationDto } from '@common/dto/pagination.dto';
 import { PartialType } from '@nestjs/mapped-types';
 
-export class PaginationSimpleSearchEventDto extends PartialType(
-  PaginationSimpleDto,
-) {
+export class PaginationSimpleSearchEventDto extends PartialType(PaginationDto) {
   @IsOptional()
   @IsString()
   name?: string;

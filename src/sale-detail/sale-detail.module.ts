@@ -10,10 +10,6 @@ import { SaleDetail, SaleDetailSchema } from './schema/sale-detail.schema';
 
 @Module({
   imports: [
-    SaleModule,
-    ProductModule,
-    PromotionProductModule,
-    CouponModule,
     MongooseModule.forFeature([
       { name: SaleDetail.name, schema: SaleDetailSchema },
     ]),

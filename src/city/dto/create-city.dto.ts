@@ -11,6 +11,7 @@ import {
   IsISO8601,
 } from 'class-validator';
 import { Type } from 'class-transformer';
+
 export class CreateCityDto {
   @IsString()
   @IsNotEmpty()

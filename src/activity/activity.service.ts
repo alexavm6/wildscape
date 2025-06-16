@@ -5,8 +5,7 @@ import { Activity, ActivityDocument } from '@activity/schema/activity.schema';
 import { PaginationDto } from '@common/dto/pagination.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { PaginationSearchActivityDto } from './dto/pagination-search-activity.dto';
-import { PaginationManagementSearchActivityDto } from './dto/pagination-management-search-activity.dto';
+import { PaginationManagementDto } from '@common/dto/management/pagination-management.dto';
 
 @Injectable()
 export class ActivityService {
@@ -14,58 +13,25 @@ export class ActivityService {
     @InjectModel(Activity.name) private activityModel: Model<ActivityDocument>,
   ) {}
 
+  //user area
   async findAll(paginationDto: PaginationDto): Promise<Activity[]> {
-    const { limit = 5, offset = 0 } = paginationDto;
+    const { limit = 3, offset = 0 } = paginationDto;
 
     const activities = await this.activityModel
       .find({ is_available: true })
       .select('name image')
+      .sort({ name: 1 })
       .limit(limit)
       .skip(offset);
 
     return activities;
   }
 
-  async findAllSearch(
-    paginationSearchActivityDto: PaginationSearchActivityDto,
-  ): Promise<Activity[]> {
-    const { limit = 5, offset = 0, name } = paginationSearchActivityDto;
-
-    const filter: any = { is_available: true };
-
-    if (name) filter.name = { $regex: name, $options: 'i' };
-
+  async findAllProductFilter(): Promise<Activity[]> {
     const activities = await this.activityModel
-      .find(filter)
-      .select('-is_available')
-      .limit(limit)
-      .skip(offset);
-
-    return activities;
-  }
-
-  async findAllManagementSearch(
-    paginationManagementSearchActivityDto: PaginationManagementSearchActivityDto,
-  ): Promise<Activity[]> {
-    const {
-      limit = 5,
-      offset = 0,
-      name,
-      is_available = 'all',
-    } = paginationManagementSearchActivityDto;
-
-    const filter: any = {};
-
-    if (name) filter.name = { $regex: name, $options: 'i' };
-
-    if (is_available && is_available !== 'all') {
-      filter.is_available = is_available === 'true';
-    }
-
-    const activities = await this.activityModel
-      .find(filter)
-      .limit(limit)
-      .skip(offset);
+      .find({ is_available: true })
+      .select('name')
+      .sort({ name: 1 });
 
     return activities;
   }
@@ -80,6 +46,45 @@ export class ActivityService {
     }
 
     return activity;
+  }
+
+  //Management area
+  async findAllManagementFilter(name?: string): Promise<Activity[]> {
+    const filter: any = {};
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' };
+    }
+    const activities = await this.activityModel
+      .find(filter)
+      .select('name')
+      .sort({ name: 1 });
+
+    return activities;
+  }
+
+  async findAllManagement(
+    paginationFindAllManagementDto: PaginationManagementDto,
+  ): Promise<Activity[]> {
+    const {
+      limit = 10,
+      offset = 0,
+      name,
+      is_available = 'all',
+    } = paginationFindAllManagementDto;
+
+    const filter: any = {};
+
+    if (name) filter.name = { $regex: name, $options: 'i' };
+    if (is_available && is_available !== 'all') {
+      filter.is_available = is_available === 'true';
+    }
+
+    const activities = await this.activityModel
+      .find(filter)
+      .sort({ name: 1 })
+      .limit(limit)
+      .skip(offset);
+    return activities;
   }
 
   async findByIdManagement(id: string): Promise<Activity> {

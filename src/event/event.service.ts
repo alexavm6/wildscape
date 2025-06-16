@@ -13,7 +13,6 @@ import { Province, ProvinceDocument } from '@province/schema/province.schema';
 import { District, DistrictDocument } from '@district/schema/district.schema';
 import { City, CityDocument } from '@city/schema/city.schema';
 import { PaginationDto } from '@common/dto/pagination.dto';
-import { PaginationSimpleDto } from '@common/dto/pagination-simple.dto';
 import { PaginationManagementSearchEventDto } from './dto/pagination-management-search-event.dto';
 import { PaginationSimpleSearchEventDto } from './dto/pagination-simple-search-event.dto';
 
@@ -48,7 +47,6 @@ export class EventService {
     const {
       limit = 5,
       offset = 0,
-      simple = 'false',
       name,
       description,
       campus_id,
@@ -96,48 +94,10 @@ export class EventService {
       filter.capacity = { $lte: max_capacity };
     }
 
-    const isSimple = simple === 'true';
-
-    if (isSimple) {
-      const events = await this.eventModel
-        .find(filter)
-        .select('name description price')
-        .sort({ createdAt: -1 })
-        .limit(limit)
-        .skip(offset);
-
-      return events;
-    }
-
     const events = await this.eventModel
       .find(filter)
+      .select('name description price')
       .sort({ createdAt: -1 })
-      .select('-is_available')
-      .populate({
-        path: 'campus_id',
-        model: 'Campus',
-        select: 'name -_id',
-      })
-      .populate({
-        path: 'department_id',
-        model: 'Department',
-        select: 'name -_id',
-      })
-      .populate({
-        path: 'province_id',
-        model: 'Province',
-        select: 'name -_id',
-      })
-      .populate({
-        path: 'district_id',
-        model: 'District',
-        select: 'name -_id',
-      })
-      .populate({
-        path: 'city_id',
-        model: 'City',
-        select: 'name -_id',
-      })
       .limit(limit)
       .skip(offset);
 

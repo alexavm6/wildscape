@@ -1,26 +1,104 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 import { CreateDepartmentDto } from './dto/create-department.dto';
 import { UpdateDepartmentDto } from './dto/update-department.dto';
+import { Department, DepartmentDocument } from './schema/department.schema';
+import { PaginationManagementDto } from '@common/dto/management/pagination-management.dto';
+import { PaginationDto } from '@common/dto/pagination.dto';
 
 @Injectable()
 export class DepartmentService {
-  create(createDepartmentDto: CreateDepartmentDto) {
-    return 'This action adds a new department';
+  constructor(
+    @InjectModel(Department.name)
+    private departmentModel: Model<DepartmentDocument>,
+  ) {}
+
+  //user area
+  async findAllProductFilter(): Promise<Department[]> {
+    const departments = await this.departmentModel
+      .find({ is_available: true })
+      .select('name')
+      .sort({ name: 1 });
+
+    return departments;
   }
 
-  findAll() {
-    return `This action returns all department`;
+  //Management area
+  async findAllManagementFilter(name?: string): Promise<Department[]> {
+    const filter: any = {};
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' };
+    }
+    const departments = await this.departmentModel
+      .find(filter)
+      .select('name')
+      .sort({ name: 1 });
+
+    return departments;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} department`;
+  async findAllManagement(
+    paginationFindAllManagementDto: PaginationManagementDto,
+  ): Promise<Department[]> {
+    const {
+      limit = 10,
+      offset = 0,
+      name,
+      is_available = 'all',
+    } = paginationFindAllManagementDto;
+
+    const filter: any = {};
+
+    if (name) filter.name = { $regex: name, $options: 'i' };
+    if (is_available && is_available !== 'all') {
+      filter.is_available = is_available === 'true';
+    }
+
+    const departments = await this.departmentModel
+      .find(filter)
+      .sort({ name: 1 })
+      .limit(limit)
+      .skip(offset);
+    return departments;
   }
 
-  update(id: number, updateDepartmentDto: UpdateDepartmentDto) {
-    return `This action updates a #${id} department`;
+  async findByIdManagement(id: string): Promise<Department> {
+    const department = await this.departmentModel.findById(id);
+
+    if (!department) {
+      throw new NotFoundException(`Department con id ${id} no encontrado`);
+    }
+
+    return department;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} department`;
+  async updateById(
+    id: string,
+    updateDepartmentDto: UpdateDepartmentDto,
+  ): Promise<Department> {
+    const updatedDepartment = await this.departmentModel.findByIdAndUpdate(
+      id,
+      updateDepartmentDto,
+      { new: true },
+    );
+
+    if (!updatedDepartment) {
+      throw new NotFoundException(`Department con ${id} no encontrado`);
+    }
+
+    return updatedDepartment;
+  }
+
+  async create(createDepartmentDto: CreateDepartmentDto): Promise<Department> {
+    return await this.departmentModel.create(createDepartmentDto);
+  }
+
+  async delete(id: string): Promise<Department> {
+    const department = await this.departmentModel.findByIdAndDelete(id);
+    if (!department) {
+      throw new NotFoundException(`Department con ID ${id} no encontrado`);
+    }
+    return department;
   }
 }

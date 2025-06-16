@@ -21,7 +21,7 @@ export class Province {
   name: string;
 
   @Prop({ default: true })
-  is_available: boolean;
+  is_available?: boolean;
 }
 
 export const ProvinceSchema = SchemaFactory.createForClass(Province);

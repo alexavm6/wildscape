@@ -21,7 +21,7 @@ export class Department {
   name: string;
 
   @Prop({ default: true })
-  is_available: boolean;
+  is_available?: boolean;
 }
 
 export const DepartmentSchema = SchemaFactory.createForClass(Department);

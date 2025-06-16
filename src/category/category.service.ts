@@ -1,12 +1,11 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import { Category, CategoryDocument } from './schema/category.schema';
+import { Category, CategoryDocument } from '@category/schema/category.schema';
 import { PaginationDto } from '@common/dto/pagination.dto';
-import { PaginationManagementSearchCategoryDto } from './dto/pagination-management-search-category.dto';
-import { PaginationSearchCategoryDto } from './dto/pagination-search-category.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { PaginationManagementDto } from '@common/dto/management/pagination-management.dto';
 
 @Injectable()
 export class CategoryService {
@@ -14,72 +13,66 @@ export class CategoryService {
     @InjectModel(Category.name) private categoryModel: Model<CategoryDocument>,
   ) {}
 
+  //user area
   async findAll(paginationDto: PaginationDto): Promise<Category[]> {
-    const { limit = 5, offset = 0 } = paginationDto;
+    const { limit = 3, offset = 0 } = paginationDto;
 
     const categories = await this.categoryModel
       .find({ is_available: true })
       .select('name image')
+      .sort({ name: 1 })
       .limit(limit)
       .skip(offset);
 
     return categories;
   }
 
-  async findAllSearch(
-    paginationSearchCategoryDto: PaginationSearchCategoryDto,
-  ): Promise<Category[]> {
-    const { limit = 5, offset = 0, name } = paginationSearchCategoryDto;
+  async findAllProductFilter(): Promise<Category[]> {
+    const categories = await this.categoryModel
+      .find({ is_available: true })
+      .select('name')
+      .sort({ name: 1 });
 
-    const filter: any = { is_available: true };
+    return categories;
+  }
 
-    if (name) filter.name = { $regex: name, $options: 'i' };
-
+  //Management area
+  async findAllManagementFilter(name?: string): Promise<Category[]> {
+    const filter: any = {};
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' };
+    }
     const categories = await this.categoryModel
       .find(filter)
-      .select('-is_available')
-      .limit(limit)
-      .skip(offset);
+      .select('name')
+      .sort({ name: 1 });
 
     return categories;
   }
 
-  async findAllManagementSearch(
-    paginationManagementSearchCategoryDto: PaginationManagementSearchCategoryDto,
+  async findAllManagement(
+    paginationFindAllManagementDto: PaginationManagementDto,
   ): Promise<Category[]> {
     const {
-      limit = 5,
+      limit = 10,
       offset = 0,
       name,
       is_available = 'all',
-    } = paginationManagementSearchCategoryDto;
+    } = paginationFindAllManagementDto;
 
     const filter: any = {};
 
     if (name) filter.name = { $regex: name, $options: 'i' };
-
     if (is_available && is_available !== 'all') {
       filter.is_available = is_available === 'true';
     }
 
     const categories = await this.categoryModel
       .find(filter)
+      .sort({ name: 1 })
       .limit(limit)
       .skip(offset);
-
     return categories;
-  }
-
-  async findById(id: string): Promise<Category> {
-    const category = await this.categoryModel
-      .findOne({ _id: id, is_available: true })
-      .select('-is_available');
-
-    if (!category) {
-      throw new NotFoundException(`Category con id ${id} no encontrado`);
-    }
-
-    return category;
   }
 
   async findByIdManagement(id: string): Promise<Category> {
@@ -98,7 +91,7 @@ export class CategoryService {
   ): Promise<Category> {
     const updatedCategory = await this.categoryModel.findByIdAndUpdate(
       id,
-      UpdateCategoryDto,
+      updateCategoryDto,
       { new: true },
     );
 

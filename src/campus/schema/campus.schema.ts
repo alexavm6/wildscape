@@ -21,21 +21,20 @@ export class Campus {
   @Prop({ required: true })
   name: string;
 
-  @Prop({ required: true })
-  address: string;
+  @Prop()
+  address?: string;
 
-  @Prop({ required: true })
-  annex: number;
+  @Prop()
+  annex?: number;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: Company.name,
-    required: true,
   })
-  company_id: Company;
+  company_id?: Company;
 
   @Prop({ default: true })
-  is_available: boolean;
+  is_available?: boolean;
 }
 
 export const CampusSchema = SchemaFactory.createForClass(Campus);

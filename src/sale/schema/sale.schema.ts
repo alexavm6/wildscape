@@ -17,21 +17,20 @@ export type SaleDocument = HydratedDocument<Sale>;
   },
 })
 export class Sale {
-  @Prop({ required: true })
-  total: number;
+  @Prop()
+  total?: number;
 
   @Prop({ default: () => new Date() })
-  purchase_day: Date;
+  purchase_day?: Date;
 
   @Prop({ default: () => new Date() })
-  purchase_time: Date;
+  purchase_time?: Date;
 
   @Prop({
     type: mongoose.Schema.Types.ObjectId,
     ref: User.name,
-    required: true,
   })
-  user_id: User;
+  user_id?: User;
 }
 
 export const SaleSchema = SchemaFactory.createForClass(Sale);

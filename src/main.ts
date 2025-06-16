@@ -12,8 +12,15 @@ async function bootstrap() {
   //route /api
   app.setGlobalPrefix('api');
 
-  //pipes:
-  //whitelist get rid of fields not defined in the DTO
+  /*
+    whitelist: true, // Esto asegura que solo los campos definidos en el DTO son pasados
+
+    forbidNonWhitelisted: true, // Si hay campos no definidos en el DTO, lanza un error
+
+    transform: true, // Transforma los query strings a los tipos definidos en el DTO (ej. "20" a 20 si es @IsNumber)
+
+    transformOptions: { enableImplicitConversion: true }, // Permite la conversión implícita para @IsNumber
+  */
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,

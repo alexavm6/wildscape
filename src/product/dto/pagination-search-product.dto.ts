@@ -3,24 +3,20 @@ import {
   IsString,
   IsNumber,
   IsPositive,
+  IsNotEmpty,
   IsDateString,
   IsMongoId,
   Min,
+  IsIn,
 } from 'class-validator';
 import { Type } from 'class-transformer';
-import { PaginationSimpleDto } from '@common/dto/pagination-simple.dto';
+import { PaginationDto } from '@common/dto/pagination.dto';
 import { PartialType } from '@nestjs/mapped-types';
 
-export class PaginationSimpleSearchProductDto extends PartialType(
-  PaginationSimpleDto,
-) {
-  @IsOptional()
+export class PaginationSearchProductDto extends PartialType(PaginationDto) {
   @IsString()
+  @IsOptional()
   name?: string;
-
-  @IsOptional()
-  @IsString()
-  description?: string;
 
   @IsOptional()
   @IsMongoId()
@@ -34,13 +30,10 @@ export class PaginationSimpleSearchProductDto extends PartialType(
   @IsMongoId()
   risk_id?: string;
 
-  @IsOptional()
-  @IsMongoId()
-  campus_id?: string;
-
+  /*capacity*/
   @IsOptional()
   @IsNumber()
-  @Min(0)
+  @Min(1)
   capacity?: number;
 
   @IsOptional()
@@ -52,22 +45,9 @@ export class PaginationSimpleSearchProductDto extends PartialType(
   @IsNumber()
   @Min(0)
   max_capacity?: number;
+  /**/
 
-  @IsOptional()
-  @IsNumber()
-  @Min(0)
-  displacement_duration?: number;
-
-  @IsOptional()
-  @IsNumber()
-  @Min(0)
-  min_displacement_duration?: number;
-
-  @IsOptional()
-  @IsNumber()
-  @Min(0)
-  max_displacement_duration?: number;
-
+  /*price*/
   @IsOptional()
   @IsNumber()
   @Min(0)
@@ -82,7 +62,9 @@ export class PaginationSimpleSearchProductDto extends PartialType(
   @IsNumber()
   @Min(0)
   max_price?: number;
+  /**/
 
+  /*activity_duration*/
   @IsOptional()
   @IsNumber()
   @Min(0)
@@ -97,6 +79,7 @@ export class PaginationSimpleSearchProductDto extends PartialType(
   @IsNumber()
   @Min(0)
   max_activity_duration?: number;
+  /**/
 
   @IsOptional()
   @IsMongoId()
@@ -113,28 +96,4 @@ export class PaginationSimpleSearchProductDto extends PartialType(
   @IsOptional()
   @IsMongoId()
   activity_city_id?: string;
-
-  @IsOptional()
-  @IsString()
-  activity_address?: string;
-
-  @IsOptional()
-  @IsMongoId()
-  meeting_department_id?: string;
-
-  @IsOptional()
-  @IsMongoId()
-  meeting_province_id?: string;
-
-  @IsOptional()
-  @IsMongoId()
-  meeting_district_id?: string;
-
-  @IsOptional()
-  @IsMongoId()
-  meeting_city_id?: string;
-
-  @IsOptional()
-  @IsString()
-  meeting_address?: string;
 }

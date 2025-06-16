@@ -21,7 +21,7 @@ export class District {
   name: string;
 
   @Prop({ default: true })
-  is_available: boolean;
+  is_available?: boolean;
 }
 
 export const DistrictSchema = SchemaFactory.createForClass(District);

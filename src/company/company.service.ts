@@ -10,6 +10,22 @@ export class CompanyService {
     @InjectModel(Company.name) private companyModel: Model<CompanyDocument>,
   ) {}
 
+  //Management area
+  async findAllManagement(): Promise<Company[]> {
+    const companies = await this.companyModel.find();
+    return companies;
+  }
+
+  async findByIdManagement(id: string): Promise<Company> {
+    const company = await this.companyModel.findById(id);
+
+    if (!company) {
+      throw new NotFoundException(`Company con id ${id} no encontrado`);
+    }
+
+    return company;
+  }
+
   async updateById(
     id: string,
     updateCompanyDto: UpdateCompanyDto,
@@ -21,13 +37,9 @@ export class CompanyService {
     );
 
     if (!updatedCompany) {
-      throw new NotFoundException(`Compañia con ${id} no encontrado`);
+      throw new NotFoundException(`Company con ${id} no encontrado`);
     }
 
     return updatedCompany;
-  }
-
-  async findAll(): Promise<Company[]> {
-    return await this.companyModel.find();
   }
 }
